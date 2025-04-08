@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>会聊鸭 - 原型导航</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        body {
+            background-color: #f5f7fa;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .description {
+            color: #666;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+        .screen {
+            background-color: white;
+            border-radius: 40px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            width: 390px;
+            height: 844px;
+            overflow: hidden;
+            position: relative;
+        }
+        .screen-title {
+            text-align: center;
+            margin: 10px 0 5px;
+            font-size: 16px;
+            color: #333;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>会聊鸭 - 高情商回复生成器</h1>
+    <p class="description">高保真原型展示 (iPhone 15 Pro 尺寸)</p>
+    
+    <div class="container">
+        <div>
+            <h2 class="screen-title">首页</h2>
+            <div class="screen">
+                <iframe src="home.html" title="首页"></iframe>
+            </div>
+        </div>
+        
+        <div>
+            <h2 class="screen-title">回复生成</h2>
+            <div class="screen">
+                <iframe src="generate.html" title="回复生成"></iframe>
+            </div>
+        </div>
+        
+        <div>
+            <h2 class="screen-title">生成结果</h2>
+            <div class="screen">
+                <iframe src="result.html" title="生成结果"></iframe>
+            </div>
+        </div>
+        
+        <div>
+            <h2 class="screen-title">历史记录</h2>
+            <div class="screen">
+                <iframe src="history.html" title="历史记录"></iframe>
+            </div>
+        </div>
+        
+        <div>
+            <h2 class="screen-title">我的</h2>
+            <div class="screen">
+                <iframe src="profile.html" title="我的"></iframe>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
