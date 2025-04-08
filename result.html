@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>会聊鸭 - 生成结果</title>
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-static@latest/font/lucide.min.css">
+    <style>
+        .page-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .page-header .duck-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            position: relative;
+        }
+        
+        .page-header .duck-icon::before {
+            content: '🦆';
+            position: absolute;
+            font-size: 28px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .original-message {
+            background-color: var(--bg-light);
+            padding: 18px;
+            border-radius: var(--border-radius);
+            margin-bottom: 25px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+        }
+        
+        .original-message::before {
+            content: '原始消息';
+            position: absolute;
+            top: -12px;
+            left: 15px;
+            background: linear-gradient(135deg, #FFF, #F8F8FF);
+            padding: 3px 12px;
+            color: var(--text-secondary);
+            font-size: 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            font-weight: 500;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.02);
+        }
+        
+        .result-card {
+            background: linear-gradient(135deg, #FFF, #FAFAFE);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-card);
+            padding: 22px;
+            margin-bottom: 25px;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            overflow: hidden;
+        }
+        
+        .result-card::before {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(255, 107, 139, 0.05) 0%, rgba(255, 107, 139, 0) 70%);
+            border-radius: 50%;
+            top: -50px;
+            right: -50px;
+            z-index: 0;
+        }
+        
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+            position: relative;
+        }
+        
+        .result-title {
+            font-weight: 600;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .result-title i {
+            margin-right: 8px;
+        }
+        
+        .quality-tag {
+            background: linear-gradient(135deg, rgba(255, 107, 139, 0.1), rgba(255, 139, 176, 0.1));
+            color: var(--primary-color);
+            padding: 4px 10px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 500;
+            border: 1px solid rgba(255, 107, 139, 0.2);
+            display: flex;
+            align-items: center;
+        }
+        
+        .quality-tag i {
+            margin-right: 4px;
+            font-size: 14px;
+        }
+        
+        .result-content {
+            line-height: 1.8;
+            margin-bottom: 20px;
+            white-space: pre-line;
+            color: var(--text-color);
+            font-size: 15px;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            position: relative;
+            z-index: 1;
+            border-left: 3px solid rgba(255, 107, 139, 0.3);
+        }
+        
+        .result-content::before {
+            content: '"';
+            position: absolute;
+            top: -5px;
+            left: 5px;
+            font-size: 40px;
+            color: rgba(255, 107, 139, 0.15);
+            font-family: Georgia, serif;
+        }
+        
+        .result-content::after {
+            content: '"';
+            position: absolute;
+            bottom: -30px;
+            right: 5px;
+            font-size: 40px;
+            color: rgba(255, 107, 139, 0.15);
+            font-family: Georgia, serif;
+        }
+        
+        .result-tools {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(0, 0, 0, 0.03);
+            margin-top: 20px;
+            padding-top: 15px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .tool-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-secondary);
+            font-size: 12px;
+            padding: 5px 10px;
+            transition: all 0.2s;
+            border-radius: 8px;
+        }
+        
+        .tool-button:active {
+            background-color: rgba(0, 0, 0, 0.02);
+            transform: scale(0.95);
+        }
+        
+        .tool-button i {
+            margin-bottom: 6px;
+            font-size: 22px;
+            transition: transform 0.2s;
+        }
+        
+        .tool-button:hover i {
+            transform: scale(1.1);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .btn-with-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn-with-icon i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        
+        .regenerate-options {
+            margin-top: 35px;
+            position: relative;
+        }
+        
+        .regenerate-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .regenerate-header i {
+            margin-right: 8px;
+            color: var(--secondary-color);
+        }
+        
+        .regenerate-option {
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 18px;
+            margin-bottom: 18px;
+            transition: all 0.3s;
+            cursor: pointer;
+            background-color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.02);
+        }
+        
+        .regenerate-option:hover {
+            border-color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .regenerate-option-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            color: var(--text-color);
+        }
+        
+        .regenerate-option-title i {
+            margin-right: 8px;
+            color: var(--secondary-color);
+            font-size: 18px;
+        }
+        
+        .regenerate-option-desc {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        /* 装饰性气泡 */
+        .decoration-bubble {
+            position: absolute;
+            border-radius: 50%;
+            z-index: -1;
+        }
+        
+        .bubble-1 {
+            width: 30px;
+            height: 30px;
+            background-color: rgba(255, 107, 139, 0.1);
+            top: 50px;
+            right: 20px;
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        .bubble-2 {
+            width: 20px;
+            height: 20px;
+            background-color: rgba(78, 220, 190, 0.1);
+            bottom: 80px;
+            left: 30px;
+            animation: float 3.5s ease-in-out infinite 0.5s;
+        }
+        
+        .bubble-3 {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(140, 124, 255, 0.08);
+            bottom: 200px;
+            right: 40px;
+            animation: float 5s ease-in-out infinite 1s;
+        }
+        
+        /* 动画效果 */
+        @keyframes pop {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .pop-in {
+            animation: pop 0.5s forwards;
+        }
+        
+        .pop-in-delay-1 {
+            animation-delay: 0.1s;
+            opacity: 0;
+        }
+        
+        .pop-in-delay-2 {
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+        
+        .pop-in-delay-3 {
+            animation-delay: 0.3s;
+            opacity: 0;
+        }
+        
+        /* 卡通小鸭子标记 */
+        .duck-mark {
+            position: absolute;
+            right: 15px;
+            bottom: 15px;
+            font-size: 24px;
+            opacity: 0.4;
+            transform: rotate(10deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="iphone-container">
+        <!-- 状态栏 -->
+        <div class="status-bar">
+            <div class="time">9:41</div>
+            <div class="right">
+                <i class="icon-signal"></i>
+                <i class="icon-wifi"></i>
+                <i class="icon-battery"></i>
+            </div>
+        </div>
+
+        <!-- 页面内容 -->
+        <div class="page-content">
+            <!-- 装饰气泡 -->
+            <div class="decoration-bubble bubble-1"></div>
+            <div class="decoration-bubble bubble-2"></div>
+            <div class="decoration-bubble bubble-3"></div>
+            
+            <div class="page-header">
+                <div class="duck-icon"></div>
+                <h1 class="page-title">回复结果</h1>
+            </div>
+            
+            <!-- 原始消息 -->
+            <div class="original-message pop-in">
+                领导批评我的工作结果不够好，我该怎么回复？
+            </div>
+            
+            <!-- 回复结果 -->
+            <div class="result-card pop-in pop-in-delay-1">
+                <div class="result-header">
+                    <div class="result-title">
+                        <i class="lucide lucide-briefcase"></i>
+                        <span>工作沟通 · 友善风格</span>
+                    </div>
+                    <div class="quality-tag">
+                        <i class="lucide lucide-star"></i>
+                        <span>专业级</span>
+                    </div>
+                </div>
+                <div class="result-content">
+                    感谢您的反馈，我完全理解并接受您的批评。我会认真分析不足之处，立即着手改进。
+                    
+                    这次经历对我来说是宝贵的学习机会，我已经思考了几个具体的提升方向，希望能尽快向您展示更好的工作成果。
+                    
+                    如果您有具体的改进建议，我非常愿意聆听，以便能更精准地达到您的期望。
+                </div>
+                <div class="result-tools">
+                    <div class="tool-button" id="copyBtn">
+                        <i class="lucide lucide-copy"></i>
+                        <span>复制</span>
+                    </div>
+                    <div class="tool-button">
+                        <i class="lucide lucide-share"></i>
+                        <span>分享</span>
+                    </div>
+                    <div class="tool-button">
+                        <i class="lucide lucide-thumbs-up"></i>
+                        <span>喜欢</span>
+                    </div>
+                    <div class="tool-button">
+                        <i class="lucide lucide-bookmark"></i>
+                        <span>收藏</span>
+                    </div>
+                </div>
+                
+                <div class="duck-mark">🦆</div>
+            </div>
+            
+            <!-- 行动按钮 -->
+            <div class="action-buttons pop-in pop-in-delay-2">
+                <a href="generate.html" class="btn btn-outline btn-with-icon" style="flex: 1;">
+                    <i class="lucide lucide-refresh-cw"></i>
+                    <span>重新生成</span>
+                </a>
+                <a href="#" class="btn btn-primary btn-with-icon" style="flex: 1;">
+                    <i class="lucide lucide-check"></i>
+                    <span>使用此回复</span>
+                </a>
+            </div>
+            
+            <!-- 其他选项 -->
+            <div class="regenerate-options pop-in pop-in-delay-3">
+                <div class="regenerate-header">
+                    <i class="lucide lucide-sparkles"></i>
+                    <h3 class="section-title">推荐优化</h3>
+                </div>
+                
+                <div class="regenerate-option">
+                    <div class="regenerate-option-title">
+                        <i class="lucide lucide-arrow-up-right"></i>
+                        <span>更专业的表达</span>
+                    </div>
+                    <div class="regenerate-option-desc">
+                        使用更专业的工作术语，突出解决问题的能力
+                    </div>
+                </div>
+                
+                <div class="regenerate-option">
+                    <div class="regenerate-option-title">
+                        <i class="lucide lucide-arrow-up-right"></i>
+                        <span>更委婉的口吻</span>
+                    </div>
+                    <div class="regenerate-option-desc">
+                        使用更温和的语气，表达接受批评的同时减轻压力感
+                    </div>
+                </div>
+                
+                <div class="regenerate-option">
+                    <div class="regenerate-option-title">
+                        <i class="lucide lucide-arrow-up-right"></i>
+                        <span>增加行动计划</span>
+                    </div>
+                    <div class="regenerate-option-desc">
+                        添加具体的改进步骤和时间规划，展示执行力
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部导航栏 -->
+        <div class="tab-bar">
+            <div class="tab-item">
+                <i class="lucide lucide-home"></i>
+                <span>首页</span>
+            </div>
+            <div class="tab-item active">
+                <i class="lucide lucide-message-square"></i>
+                <span>生成</span>
+            </div>
+            <div class="tab-item">
+                <i class="lucide lucide-clock"></i>
+                <span>历史</span>
+            </div>
+            <div class="tab-item">
+                <i class="lucide lucide-user"></i>
+                <span>我的</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 为复制按钮添加事件
+        document.getElementById('copyBtn').addEventListener('click', () => {
+            const resultText = document.querySelector('.result-content').textContent.trim();
+            navigator.clipboard.writeText(resultText)
+                .then(() => {
+                    const button = document.getElementById('copyBtn');
+                    const icon = button.querySelector('i');
+                    const text = button.querySelector('span');
+                    
+                    // 改变图标为勾号
+                    icon.classList.remove('lucide-copy');
+                    icon.classList.add('lucide-check');
+                    text.textContent = '已复制';
+                    
+                    // 3秒后还原
+                    setTimeout(() => {
+                        icon.classList.remove('lucide-check');
+                        icon.classList.add('lucide-copy');
+                        text.textContent = '复制';
+                    }, 2000);
+                })
+                .catch(err => {
+                    console.error('复制失败: ', err);
+                });
+        });
+        
+        // 为底部导航栏添加点击事件
+        document.querySelectorAll('.tab-item').forEach((tab, index) => {
+            tab.addEventListener('click', () => {
+                const pages = ['home.html', 'generate.html', 'history.html', 'profile.html'];
+                window.location.href = pages[index];
+            });
+        });
+        
+        // 为推荐优化选项添加点击事件
+        document.querySelectorAll('.regenerate-option').forEach(option => {
+            option.addEventListener('click', () => {
+                window.location.href = 'result.html'; // 实际应用中应该生成新的回复
+            });
+        });
+    </script>
+</body>
+</html> 

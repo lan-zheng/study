@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>会聊鸭 - 我的</title>
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-static@latest/font/lucide.min.css">
+    <style>
+        .profile-header {
+            padding: 20px 0;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 30px;
+            margin: 0 auto 10px;
+        }
+        
+        .user-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .user-stats {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        .vip-card {
+            background: linear-gradient(to right, #ff8b8b, #ff6b6b);
+            border-radius: var(--border-radius);
+            color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .vip-card::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -20px;
+            width: 100px;
+            height: 100px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .vip-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .vip-title i {
+            margin-right: 5px;
+        }
+        
+        .vip-desc {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 15px;
+        }
+        
+        .vip-btn {
+            background-color: white;
+            color: var(--primary-color);
+            border: none;
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .menu-group {
+            background-color: white;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+        
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+        
+        .menu-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+        
+        .menu-title {
+            flex: 1;
+            font-size: 16px;
+        }
+        
+        .menu-arrow {
+            color: var(--text-light);
+        }
+        
+        .usage-stats {
+            display: flex;
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .usage-item {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+        
+        .usage-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            height: 70%;
+            width: 1px;
+            background-color: var(--border-color);
+            transform: translateY(-50%);
+        }
+        
+        .usage-number {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .usage-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        .version-info {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="iphone-container">
+        <!-- 状态栏 -->
+        <div class="status-bar">
+            <div class="time">9:41</div>
+            <div class="right">
+                <i class="icon-signal"></i>
+                <i class="icon-wifi"></i>
+                <i class="icon-battery"></i>
+            </div>
+        </div>
+
+        <!-- 页面内容 -->
+        <div class="page-content">
+            <!-- 用户信息 -->
+            <div class="profile-header">
+                <div class="avatar">
+                    <i class="icon icon-user"></i>
+                </div>
+                <div class="user-name">高情商用户</div>
+                <div class="user-stats">已生成 42 条高情商回复</div>
+            </div>
+            
+            <!-- 使用数据 -->
+            <div class="usage-stats">
+                <div class="usage-item">
+                    <div class="usage-number">42</div>
+                    <div class="usage-label">总生成</div>
+                </div>
+                <div class="usage-item">
+                    <div class="usage-number">8</div>
+                    <div class="usage-label">已收藏</div>
+                </div>
+                <div class="usage-item">
+                    <div class="usage-number">5</div>
+                    <div class="usage-label">剩余次数</div>
+                </div>
+            </div>
+            
+            <!-- VIP卡片 -->
+            <div class="vip-card">
+                <div class="vip-title">
+                    <i class="icon icon-crown"></i>
+                    <span>会员特权</span>
+                </div>
+                <div class="vip-desc">开通会员无限次数生成，解锁更多高级场景和专业级回复</div>
+                <button class="vip-btn">立即开通</button>
+            </div>
+            
+            <!-- 功能菜单 -->
+            <div class="menu-group">
+                <div class="menu-item">
+                    <div class="menu-icon">
+                        <i class="icon icon-bookmark"></i>
+                    </div>
+                    <div class="menu-title">我的收藏</div>
+                    <div class="menu-arrow">
+                        <i class="icon icon-chevron-right"></i>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-icon">
+                        <i class="icon icon-gift"></i>
+                    </div>
+                    <div class="menu-title">邀请奖励</div>
+                    <div class="menu-arrow">
+                        <i class="icon icon-chevron-right"></i>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-icon">
+                        <i class="icon icon-refresh-cw"></i>
+                    </div>
+                    <div class="menu-title">免费获取次数</div>
+                    <div class="menu-arrow">
+                        <i class="icon icon-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 设置菜单 -->
+            <div class="menu-group">
+                <div class="menu-item">
+                    <div class="menu-icon">
+                        <i class="icon icon-settings"></i>
+                    </div>
+                    <div class="menu-title">偏好设置</div>
+                    <div class="menu-arrow">
+                        <i class="icon icon-chevron-right"></i>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-icon">
+                        <i class="icon icon-help-circle"></i>
+                    </div>
+                    <div class="menu-title">帮助中心</div>
+                    <div class="menu-arrow">
+                        <i class="icon icon-chevron-right"></i>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-icon">
+                        <i class="icon icon-info"></i>
+                    </div>
+                    <div class="menu-title">关于我们</div>
+                    <div class="menu-arrow">
+                        <i class="icon icon-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 版本信息 -->
+            <div class="version-info">
+                会聊鸭 v1.0.0
+            </div>
+        </div>
+
+        <!-- 底部导航栏 -->
+        <div class="tab-bar">
+            <div class="tab-item">
+                <i class="icon icon-home"></i>
+                <span>首页</span>
+            </div>
+            <div class="tab-item">
+                <i class="icon icon-message-square"></i>
+                <span>生成</span>
+            </div>
+            <div class="tab-item">
+                <i class="icon icon-clock"></i>
+                <span>历史</span>
+            </div>
+            <div class="tab-item active">
+                <i class="icon icon-user"></i>
+                <span>我的</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 替换图标类名以使用Lucide图标
+        document.querySelectorAll('.icon').forEach(icon => {
+            const className = icon.className;
+            const iconName = className.replace('icon icon-', '');
+            icon.className = '';
+            icon.classList.add('lucide');
+            icon.classList.add('lucide-' + iconName);
+        });
+        
+        // 为底部导航栏添加点击事件
+        document.querySelectorAll('.tab-item').forEach((tab, index) => {
+            tab.addEventListener('click', () => {
+                const pages = ['home.html', 'generate.html', 'history.html', 'profile.html'];
+                window.location.href = pages[index];
+            });
+        });
+        
+        // 为菜单项添加点击效果
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', () => {
+                // 实际应用中应该跳转到对应页面
+                item.style.backgroundColor = 'var(--bg-light)';
+                setTimeout(() => {
+                    item.style.backgroundColor = '';
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html> 
